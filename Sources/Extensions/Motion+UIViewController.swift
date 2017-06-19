@@ -85,7 +85,7 @@ extension UIViewController {
     }
     
     /// used for .overFullScreen presentation
-    internal var motionStoredSnapshot: UIView? {
+    @objc internal var motionStoredSnapshot: UIView? {
         get {
             return associatedInstance.storedSnapshot
         }
@@ -98,7 +98,7 @@ extension UIViewController {
      A reference to the previous navigation controller delegate
      before Motion was enabled.
      */
-    internal var previousNavigationDelegate: UINavigationControllerDelegate? {
+    @objc internal var previousNavigationDelegate: UINavigationControllerDelegate? {
         get {
             return associatedInstance.previousNavigationDelegate
         }
@@ -111,7 +111,7 @@ extension UIViewController {
      A reference to the previous tab bar controller delegate
      before Motion was enabled.
      */
-    internal var previousTabBarDelegate: UITabBarControllerDelegate? {
+    @objc internal var previousTabBarDelegate: UITabBarControllerDelegate? {
         get {
             return associatedInstance.previousTabBarDelegate
         }
@@ -204,22 +204,22 @@ extension UIViewController {
     }
     
     /// Unwind to a specific view controller using Motion.
-    public func motionUnwindToViewController(_ toViewController: UIViewController) {
+    @objc public func motionUnwindToViewController(_ toViewController: UIViewController) {
         motionUnwindToViewController { $0 == toViewController }
     }
     
     /// Unwind to a view controller that responds to the given selector using Motion.
-    public func motionUnwindToViewController(withSelector: Selector) {
+    @objc public func motionUnwindToViewController(withSelector: Selector) {
         motionUnwindToViewController { $0.responds(to: withSelector) }
     }
     
     /// Unwind to a view controller with given class using Motion
-    public func motionUnwindToViewController(withClass: AnyClass) {
+    @objc public func motionUnwindToViewController(withClass: AnyClass) {
         motionUnwindToViewController { $0.isKind(of: withClass) }
     }
     
     /// Unwind to a view controller that the matchBlock returns true on.
-    public func motionUnwindToViewController(withMatchBlock: (UIViewController) -> Bool) {
+    @objc public func motionUnwindToViewController(withMatchBlock: (UIViewController) -> Bool) {
         var target: UIViewController?
         var current: UIViewController? = self
         
@@ -283,7 +283,7 @@ extension UIViewController {
      navigation/modal stack.
      - Parameter with next: A UIViewController.
      */
-    public func motionReplaceViewController(with next: UIViewController) {
+    @objc public func motionReplaceViewController(with next: UIViewController) {
         guard !Motion.shared.isTransitioning else {
             print("motionReplaceViewController cancelled because Motion was doing a transition. Use Motion.shared.cancel(animated: false) or Motion.shared.end(animated: false) to stop the transition first before calling motionReplaceViewController.")
             return

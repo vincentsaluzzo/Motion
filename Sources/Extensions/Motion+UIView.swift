@@ -105,7 +105,7 @@ public extension UIView {
     }
     
     /// The animations to run while in transition.
-    @IBInspectable
+    //@IBInspectable
     var motionAlpha: CGFloat? {
         get {
             return associatedInstance.alpha
@@ -116,7 +116,7 @@ public extension UIView {
     }
 
     /// Computes the rotate of the view.
-    var motionRotationAngle: CGFloat {
+    @objc var motionRotationAngle: CGFloat {
         get {
             return CGFloat(atan2f(Float(transform.b), Float(transform.a))) * 180 / CGFloat(Double.pi)
         }
@@ -126,12 +126,12 @@ public extension UIView {
     }
     
     /// The global position of a view.
-    var motionPosition: CGPoint {
+    @objc var motionPosition: CGPoint {
         return superview?.convert(layer.position, to: nil) ?? layer.position
     }
     
     /// The layer.transform of a view.
-    var motionTransform: CATransform3D {
+    @objc var motionTransform: CATransform3D {
         get {
             return layer.transform
         }
@@ -141,12 +141,12 @@ public extension UIView {
     }
     
     /// Computes the scale X axis value of the view.
-    var motionScaleX: CGFloat {
+    @objc var motionScaleX: CGFloat {
         return transform.a
     }
     
     /// Computes the scale Y axis value of the view.
-    var motionScaleY: CGFloat {
+    @objc var motionScaleY: CGFloat {
         return transform.b
     }
     
@@ -164,7 +164,7 @@ public extension UIView {
      them on the view's backing layer.
      - Parameter animations: An Array of CAAnimations.
      */
-    func animate(_ animations: [CAAnimation]) {
+    @objc func animate(_ animations: [CAAnimation]) {
         layer.animate(animations)
     }
     
@@ -190,7 +190,7 @@ public extension UIView {
 
 internal extension UIView {
     /// Retrieves a single Array of UIViews that are in the view hierarchy.
-    var flattenedViewHierarchy: [UIView] {
+    @objc var flattenedViewHierarchy: [UIView] {
         guard isMotionEnabled else {
             return []
         }
@@ -233,7 +233,7 @@ internal extension UIView {
      Takes a snapshot of a view usinag the UI graphics context.
      - Returns: A UIView with an embedded UIImageView.
      */
-    func slowSnapshotView() -> UIView {
+    @objc func slowSnapshotView() -> UIView {
         UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0)
         layer.render(in: UIGraphicsGetCurrentContext()!)
         

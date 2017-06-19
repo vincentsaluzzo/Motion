@@ -59,7 +59,7 @@ extension CALayer {
      view's backing layer.
      - Parameter animation: A CAAnimation instance.
      */
-    public func animate(_ animations: [CAAnimation]) {
+    @objc public func animate(_ animations: [CAAnimation]) {
         for animation in animations {
             if nil == animation.delegate {
                 animation.delegate = self

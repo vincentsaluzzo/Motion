@@ -42,7 +42,7 @@ public class MotionIndependentController: MotionController {
      - Parameter toViews: An Array of UIViews.
      - Parameter completion: An optional callback.
      */
-    public func transition(rootView: UIView, fromViews: [UIView], toViews: [UIView], completion: ((Bool) -> Void)? = nil) {
+    @objc public func transition(rootView: UIView, fromViews: [UIView], toViews: [UIView], completion: ((Bool) -> Void)? = nil) {
         transitionContainer = rootView
         completionCallback = completion
 

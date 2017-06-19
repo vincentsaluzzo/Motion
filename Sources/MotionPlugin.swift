@@ -41,7 +41,7 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
    
     When **requirePerFrameCallback** is **true**, the plugin will receive `seekTo` callback on every animation frame. Hence it is possible for the plugin to do per-frame animations without implementing `animate` & `resume`
    */
-  open var requirePerFrameCallback = false
+  @objc open var requirePerFrameCallback = false
 
   public override required init() {}
 
@@ -64,7 +64,7 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
        context[view, "transition1"] = ["parameter1", "parameter2"]
 
   */
-  open func process(fromViews: [UIView], toViews: [UIView]) {}
+  @objc open func process(fromViews: [UIView], toViews: [UIView]) {}
 
   /**
    - Returns: return true if the plugin can handle animating the view.
@@ -75,7 +75,7 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
    If return true, Motion won't animate and won't let any other plugins animate this view.
    The view will also be hidden automatically during the animation.
    */
-  open func canAnimate(view: UIView, isAppearing: Bool) -> Bool { return false }
+  @objc open func canAnimate(view: UIView, isAppearing: Bool) -> Bool { return false }
 
   /**
    Perform the animation.
@@ -88,14 +88,14 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
    - Returns: The duration needed to complete the animation
    */
 
-  open func animate(fromViews: [UIView], toViews: [UIView]) -> TimeInterval { return 0 }
+  @objc open func animate(fromViews: [UIView], toViews: [UIView]) -> TimeInterval { return 0 }
 
   /**
    Called when all animations are completed.
 
    Should perform cleanup and release any reference
    */
-  open func clean() {}
+  @objc open func clean() {}
 
   /**
    For supporting interactive animation only.
@@ -105,7 +105,7 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
    - Parameters:
      - elapsedTime: time of the animation to seek to.
    */
-  open func seek(to elapsedTime: TimeInterval) {}
+  @objc open func seek(to elapsedTime: TimeInterval) {}
 
   /**
    For supporting interactive animation only.
@@ -116,7 +116,7 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
    - elapsedTime: will be the same value since last `seekTo`
    - reverse: a boolean value indicating whether or not the animation should reverse
    */
-  open func resume(at elapsedTime: TimeInterval, isReversed: Bool) -> TimeInterval { return 0 }
+  @objc open func resume(at elapsedTime: TimeInterval, isReversed: Bool) -> TimeInterval { return 0 }
 
   /**
    For supporting interactive animation only.
@@ -132,7 +132,7 @@ open class MotionPlugin: NSObject, MotionPreprocessor, MotionAnimator {
 
 // methods for enable/disable the current plugin
 extension MotionPlugin {
-  public static var isEnabled: Bool {
+  @objc public static var isEnabled: Bool {
     get {
       return Motion.isEnabled(plugin: self)
     }
@@ -144,10 +144,10 @@ extension MotionPlugin {
       }
     }
   }
-  public static func enable() {
+  @objc public static func enable() {
     Motion.enable(plugin: self)
   }
-  public static func disable() {
+  @objc public static func disable() {
     Motion.disable(plugin: self)
   }
 }

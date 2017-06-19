@@ -32,13 +32,13 @@ fileprivate let parameterRegex = "(?:\\-?\\d+(\\.?\\d+)?)|\\w+"
 fileprivate let transitionsRegex = "(\\w+)(?:\\(([^\\)]*)\\))?"
 
 internal extension NSObject {
-  func copyWithArchiver() -> Any? {
+  @objc func copyWithArchiver() -> Any? {
     return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self))!
   }
 }
 
 internal extension UIImage {
-  class func imageWithView(view: UIView) -> UIImage {
+  @objc class func imageWithView(view: UIView) -> UIImage {
     UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, 0.0)
     view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
     let img = UIGraphicsGetImageFromCurrentImageContext()
@@ -56,7 +56,7 @@ internal extension UIColor {
     getRed(&r, green: &g, blue: &b, alpha: &a)
     return (r, g, b, a)
   }
-  var alphaComponent: CGFloat {
+  @objc var alphaComponent: CGFloat {
     return components.a
   }
 }

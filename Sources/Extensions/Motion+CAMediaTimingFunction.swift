@@ -42,26 +42,26 @@ public enum CAMediaTimingFunctionType {
  
 public extension CAMediaTimingFunction {
     //  default
-    static let linear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-    static let easeIn = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
-    static let easeOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-    static let easeInOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+    @objc static let linear = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+    @objc static let easeIn = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+    @objc static let easeOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+    @objc static let easeInOut = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
 
     //  material  
-    static let standard = CAMediaTimingFunction(controlPoints: 0.4, 0.0, 0.2, 1.0)
-    static let deceleration = CAMediaTimingFunction(controlPoints: 0.0, 0.0, 0.2, 1)
-    static let acceleration = CAMediaTimingFunction(controlPoints: 0.4, 0.0, 1, 1)
-    static let sharp = CAMediaTimingFunction(controlPoints: 0.4, 0.0, 0.6, 1)
+    @objc static let standard = CAMediaTimingFunction(controlPoints: 0.4, 0.0, 0.2, 1.0)
+    @objc static let deceleration = CAMediaTimingFunction(controlPoints: 0.0, 0.0, 0.2, 1)
+    @objc static let acceleration = CAMediaTimingFunction(controlPoints: 0.4, 0.0, 1, 1)
+    @objc static let sharp = CAMediaTimingFunction(controlPoints: 0.4, 0.0, 0.6, 1)
     
     // easing.net
-    static let easeOutBack = CAMediaTimingFunction(controlPoints: 0.175, 0.885, 0.32, 1.75)
+    @objc static let easeOutBack = CAMediaTimingFunction(controlPoints: 0.175, 0.885, 0.32, 1.75)
  
     /**
      Converts a string name matching a CAMediaTimingFunctionType to a 
      CAMediaTimingFunction value.
      - Parameter mediaTimingFunctionType: A String.
      */
-    static func from(mediaTimingFunctionType: String) -> CAMediaTimingFunction? {
+    @objc static func from(mediaTimingFunctionType: String) -> CAMediaTimingFunction? {
         switch mediaTimingFunctionType {
         case "linear":
             return .linear

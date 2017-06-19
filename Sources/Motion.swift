@@ -127,16 +127,16 @@ public protocol MotionViewControllerDelegate {
  */
 public class Motion: MotionController {
     /// Shared singleton object for controlling the transition
-    public static let shared = Motion()
+    @objc public static let shared = Motion()
 
     /// Source view controller.
-    public internal(set) var fromViewController: UIViewController?
+    @objc public internal(set) var fromViewController: UIViewController?
 
     /// Destination view controller.
-    public internal(set) var toViewController: UIViewController?
+    @objc public internal(set) var toViewController: UIViewController?
     
     /// Whether or not we are presenting the destination view controller.
-    public internal(set) var isPresenting = true
+    @objc public internal(set) var isPresenting = true
 
     /// Progress of the current transition, 0 if a transition is not happening.
     public override var elapsedTime: TimeInterval {
@@ -150,46 +150,46 @@ public class Motion: MotionController {
     }
 
     /// Indicates whether the transition is animating or not.
-    public var isAnimating = false
+    @objc public var isAnimating = false
   
     /**
      A UIViewControllerContextTransitioning object provided by UIKit, which
      might be nil when isTransitioning. This happens when calling motionReplaceViewController
      */
-    internal weak var transitionContext: UIViewControllerContextTransitioning?
+    @objc internal weak var transitionContext: UIViewControllerContextTransitioning?
 
     /// A reference to a fullscreen snapshot.
-    internal var fullScreenSnapshot: UIView!
+    @objc internal var fullScreenSnapshot: UIView!
 
     /// Default animation type.
     internal var defaultAnimation = MotionTransitionType.auto
 
     /// The color of the transitioning container.
-    internal var containerBackgroundColor: UIColor?
+    @objc internal var containerBackgroundColor: UIColor?
     
     /**
      By default, Motion will always appear to be interactive to UIKit. This forces it to appear non-interactive.
      Used when doing a motionReplaceViewController within a UINavigationController, to fix a bug with
      UINavigationController.setViewControllers not able to handle interactive transitions.
      */
-    internal var forceNonInteractive = false
+    @objc internal var forceNonInteractive = false
 
     /// Inserts the toViews first.
-    internal var insertToViewFirst = false
+    @objc internal var insertToViewFirst = false
     
     /// Indicates whether a UINavigationController is transitioning.
-    internal var isNavigationController = false
+    @objc internal var isNavigationController = false
   
     /// Indicates whether a UITabBarController is transitioning.
-    internal var isTabBarController = false
+    @objc internal var isTabBarController = false
   
     /// Indicates whether a UINavigationController or UITabBarController is transitioning.
-    internal var isContainerController: Bool {
+    @objc internal var isContainerController: Bool {
         return isNavigationController || isTabBarController
     }
     
     /// Indicates whether the from view controller is full screen.
-    internal var fromOverFullScreen: Bool {
+    @objc internal var fromOverFullScreen: Bool {
         guard let v = fromViewController else {
             return false
         }
@@ -198,7 +198,7 @@ public class Motion: MotionController {
     }
     
     /// Indicates whether the to view controller is full screen.
-    internal var toOverFullScreen: Bool {
+    @objc internal var toOverFullScreen: Bool {
         guard let v = toViewController else {
             return false
         }
@@ -207,12 +207,12 @@ public class Motion: MotionController {
     }
 
     /// A reference to the fromView, fromViewController.view.
-    internal var fromView: UIView? {
+    @objc internal var fromView: UIView? {
         return fromViewController?.view
     }
     
     /// A reference to the toView, toViewController.view.
-    internal var toView: UIView? {
+    @objc internal var toView: UIView? {
         return toViewController?.view
     }
 
@@ -224,7 +224,7 @@ public class Motion: MotionController {
 
 public extension Motion {
     /// Turn off built-in animations for the next transition.
-    func disableDefaultAnimationForNextTransition() {
+    @objc func disableDefaultAnimationForNextTransition() {
         defaultAnimation = .none
     }
     
@@ -241,7 +241,7 @@ public extension Motion {
      Set the container background color for the next transition.
      - Parameter _ color: An optional UIColor.
      */
-    func setContainerBackgroundColorForNextTransition(_ color: UIColor?) {
+    @objc func setContainerBackgroundColorForNextTransition(_ color: UIColor?) {
         containerBackgroundColor = color
     }
 }
@@ -624,7 +624,7 @@ internal extension Motion {
      - Parameter in view: A UIView.
      - Parameter completion: An optional completion handler.
      */
-    func transition(from: UIViewController, to: UIViewController, in view: UIView, completion: ((Bool) -> Void)? = nil) {
+    @objc func transition(from: UIViewController, to: UIViewController, in view: UIView, completion: ((Bool) -> Void)? = nil) {
         guard !isTransitioning else {
             return
         }
@@ -696,7 +696,7 @@ extension Motion: UIViewControllerAnimatedTransitioning {
 
 extension Motion: UIViewControllerTransitioningDelegate {
     /// A reference to the interactive transitioning instance.
-    var interactiveTransitioning: UIViewControllerInteractiveTransitioning? {
+    @objc var interactiveTransitioning: UIViewControllerInteractiveTransitioning? {
         return forceNonInteractive ? nil : self
     }
     
@@ -779,7 +779,7 @@ extension Motion {
      - Parameter execute block: A completion block that is executed once
      the animations have completed.
      */
-    @discardableResult
+    @objc @discardableResult
     public class func delay(_ time: TimeInterval, execute block: @escaping () -> Void) -> MotionDelayCancelBlock? {
         var cancelable: MotionDelayCancelBlock?
         
@@ -804,7 +804,7 @@ extension Motion {
      Cancels the delayed MotionDelayCancelBlock.
      - Parameter delayed completion: An MotionDelayCancelBlock.
      */
-    public class func cancel(delayed completion: MotionDelayCancelBlock) {
+    @objc public class func cancel(delayed completion: MotionDelayCancelBlock) {
         completion(true)
     }
     
@@ -812,7 +812,7 @@ extension Motion {
      Disables the default animations set on CALayers.
      - Parameter animations: A callback that wraps the animations to disable.
      */
-    public class func disable(_ animations: (() -> Void)) {
+    @objc public class func disable(_ animations: (() -> Void)) {
         animate(duration: 0, animations: animations)
     }
     

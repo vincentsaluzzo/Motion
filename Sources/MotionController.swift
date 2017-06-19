@@ -33,12 +33,12 @@ public class MotionController: NSObject {
     public internal(set) var context: MotionContext!
 
     /// A boolean indicating whether the transition interactive or not.
-    public var isInteractive: Bool {
+    @objc public var isInteractive: Bool {
         return nil == displayLink
     }
     
     /// Progress of the current transition. 0 if no transition is happening.
-    public internal(set) var elapsedTime: TimeInterval = 0 {
+    @objc public internal(set) var elapsedTime: TimeInterval = 0 {
         didSet {
             guard isTransitioning else {
                 return
@@ -56,7 +56,7 @@ public class MotionController: NSObject {
     }
     
     /// A boolean indicating whether a transition is active.
-    public var isTransitioning: Bool {
+    @objc public var isTransitioning: Bool {
         return nil != transitionContainer
     }
 
@@ -64,25 +64,25 @@ public class MotionController: NSObject {
      A view container used to hold all the animating views during a 
      transition.
      */
-    public internal(set) var container: UIView?
+    @objc public internal(set) var container: UIView?
 
     /// UIKit's supplied transition container.
-    internal var transitionContainer: UIView?
+    @objc internal var transitionContainer: UIView?
 
     /// An optional completion callback.
-    internal var completionCallback: ((Bool) -> Void)?
+    @objc internal var completionCallback: ((Bool) -> Void)?
     
     /// Binds the render cycle to the transition animation.
-    internal var displayLink: CADisplayLink?
+    @objc internal var displayLink: CADisplayLink?
     
     /// An Array of observers that are updated during a transition.
     internal var transitionObservers: [MotionTransitionObserver]?
 
     /// Max duration used by MotionAnimators and MotionPlugins.
-    public internal(set) var totalDuration: TimeInterval = 0
+    @objc public internal(set) var totalDuration: TimeInterval = 0
 
     /// The currently running animation duration.
-    internal var currentAnimationDuration: TimeInterval = 0
+    @objc internal var currentAnimationDuration: TimeInterval = 0
     
     /// The start time of the animation.
     internal var beginTime: TimeInterval? {
@@ -104,7 +104,7 @@ public class MotionController: NSObject {
     }
 
     /// A boolean indicating if the transition has finished.
-    internal var isFinished = true
+    @objc internal var isFinished = true
 
     /// An Array of MotionPreprocessors used during a transition.
     internal fileprivate(set) lazy var preprocessors = [MotionPreprocessor]()
@@ -113,13 +113,13 @@ public class MotionController: NSObject {
     internal fileprivate(set) lazy var animators = [MotionAnimator]()
     
     /// An Array of MotionPlugins used during a transition.
-    internal fileprivate(set) lazy var plugins = [MotionPlugin]()
+    @objc internal fileprivate(set) lazy var plugins = [MotionPlugin]()
     
     /// The matching fromViews to toViews based on the motionIdentifier value.
     internal fileprivate(set) lazy var transitionPairs = [(fromViews: [UIView], toViews: [UIView])]()
 
     /// Plugins that are enabled during the transition.
-    internal static var enabledPlugins = [MotionPlugin.Type]()
+    @objc internal static var enabledPlugins = [MotionPlugin.Type]()
 
     /// Initializer.
     internal override init() {}
@@ -214,7 +214,7 @@ public extension MotionController {
      Updates the elapsed time for the interactive transition.
      - Parameter elapsedTime t: the current progress, must be between -1...1.
      */
-    public func update(elapsedTime t: TimeInterval) {
+    @objc public func update(elapsedTime t: TimeInterval) {
         guard isTransitioning else {
             return
         }
@@ -229,7 +229,7 @@ public extension MotionController {
      current state to the **end** state
      - Parameter isAnimated: A boolean indicating if the completion is animated.
      */
-    public func end(isAnimated: Bool = true) {
+    @objc public func end(isAnimated: Bool = true) {
         guard isTransitioning else {
             return
         }
@@ -254,7 +254,7 @@ public extension MotionController {
      current state to the **begining** state
      - Parameter isAnimated: A boolean indicating if the completion is animated.
      */
-    public func cancel(isAnimated: Bool = true) {
+    @objc public func cancel(isAnimated: Bool = true) {
         guard isTransitioning else {
             return
         }
@@ -310,7 +310,7 @@ internal extension MotionController {
      Subclasses should call context.set(fromViews: toViews) after
      inserting fromViews & toViews into the container
      */
-    func prepareTransition() {
+    @objc func prepareTransition() {
         guard isTransitioning else {
             return
         }
@@ -323,7 +323,7 @@ internal extension MotionController {
     }
     
     /// Prepares the transition fromView & toView pairs.
-    func prepareTransitionPairs() {
+    @objc func prepareTransitionPairs() {
         guard isTransitioning else {
             return
         }
@@ -344,7 +344,7 @@ internal extension MotionController {
 
 internal extension MotionController {
     /// Executes the preprocessors' process function.
-    func processContext() {
+    @objc func processContext() {
         guard isTransitioning else {
             return
         }
@@ -358,7 +358,7 @@ internal extension MotionController {
      Animates the views. Subclasses should call `prepareTransition` &
      `prepareTransitionPairs` before calling `animate`.
      */
-    func animate() {
+    @objc func animate() {
         guard isTransitioning else {
             return
         }
@@ -401,7 +401,7 @@ internal extension MotionController {
      - Parameter isFinished: A Boolean indicating if the transition 
      has completed.
      */
-    func complete(after: TimeInterval, isFinished: Bool) {
+    @objc func complete(after: TimeInterval, isFinished: Bool) {
         guard isTransitioning else {
             return
         }
@@ -424,7 +424,7 @@ internal extension MotionController {
      - Parameter isFinished: A Boolean indicating if the transition
      has completed.
     */
-    func complete(isFinished: Bool) {
+    @objc func complete(isFinished: Bool) {
         guard isTransitioning else {
             return
         }
@@ -527,7 +527,7 @@ internal extension MotionController {
      - Parameter plugin: A MotionPlugin.Type.
      - Returns: A boolean indicating if the plugin is enabled or not.
      */
-    static func isEnabled(plugin: MotionPlugin.Type) -> Bool {
+    @objc static func isEnabled(plugin: MotionPlugin.Type) -> Bool {
         return nil != enabledPlugins.index(where: { return $0 == plugin })
     }
     
@@ -535,7 +535,7 @@ internal extension MotionController {
      Enables a given plugin.
      - Parameter plugin: A MotionPlugin.Type.
      */
-    static func enable(plugin: MotionPlugin.Type) {
+    @objc static func enable(plugin: MotionPlugin.Type) {
         disable(plugin: plugin)
         enabledPlugins.append(plugin)
     }
@@ -544,7 +544,7 @@ internal extension MotionController {
      Disables a given plugin.
      - Parameter plugin: A MotionPlugin.Type.
      */
-    static func disable(plugin: MotionPlugin.Type) {
+    @objc static func disable(plugin: MotionPlugin.Type) {
         guard let index = enabledPlugins.index(where: { return $0 == plugin }) else {
             return
         }
